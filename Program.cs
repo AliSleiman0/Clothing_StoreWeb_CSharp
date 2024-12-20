@@ -25,19 +25,35 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartItemsService, CartItemService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderItemsService, OrderItemsService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-
+// Add cors policy
+var corsPolicy = "cors-policy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicy, builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(corsPolicy);
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
