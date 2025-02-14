@@ -15,8 +15,20 @@ namespace Clothing_Store_C_.Controllers
             _userService = userService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetUsers() { 
-            return Ok(await _userService.GetAllUsersAsync());        
+        public async Task<IActionResult> GetUsers()
+        {
+            return Ok(await _userService.GetAllUsersAsync());
+        }
+        [HttpGet("FullUsers")]
+        public async Task<IActionResult> GetFullUsersAsync()
+        {
+            return Ok(await _userService.GetFullUsersAsync());
+        }
+        [HttpGet("top-spenders")]
+
+        public async Task<IActionResult> GetTop10UsersByAmountPaid()
+        {
+            return Ok(await _userService.GetTopSpendingUsers());
         }
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetUserById(int id)

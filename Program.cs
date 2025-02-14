@@ -1,9 +1,16 @@
+using ClothingStore.Domain.Config;
+using ClothingStore.Domain.Models;
 using ClothingStore.Infrastructure.Context;
 using ClothingStore.Infrastructure.Repository;
 using ClothingStore.Services.Helpers;
 using ClothingStore.Services.Interfaces;
 using ClothingStore.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Solvit.Services.Services.UserServices.Authentication;
+using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -31,9 +38,32 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderItemsService, OrderItemsService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserAuthService, UserAuthService>();
+builder.Services.AddIdentity<User, IdentityRole<int>>() 
+    .AddEntityFrameworkStores<ClothStoreDBContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+
+
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
 // Add cors policy
 var corsPolicy = "cors-policy";
 builder.Services.AddCors(options =>
@@ -44,6 +74,7 @@ builder.Services.AddCors(options =>
     });
 });
 var app = builder.Build();
+DataSeeder.SeedData(app.Services);
 
 
 if (app.Environment.IsDevelopment())

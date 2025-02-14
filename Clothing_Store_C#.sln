@@ -5,11 +5,11 @@ VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.API", "ClothingStore.API.csproj", "{18320F37-5A84-40E5-9DD5-630A0EC743B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Domain", "..\ClothingStore.Domain\ClothingStore.Domain.csproj", "{D24F1737-7524-47F3-BC03-42A18C803891}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Domain", "..\ClothingStore.Domain\ClothingStore.Domain.csproj", "{D24F1737-7524-47F3-BC03-42A18C803891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Infrastructure", "..\ClothingStore.Infrastructure\ClothingStore.Infrastructure.csproj", "{D53A703D-AA10-4F24-96D2-2ED93234B41D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Infrastructure", "..\ClothingStore.Infrastructure\ClothingStore.Infrastructure.csproj", "{D53A703D-AA10-4F24-96D2-2ED93234B41D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Services", "..\ClothingStore.Services\ClothingStore.Services.csproj", "{ECDFE160-3DE0-4F56-9042-527E267183F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Services", "..\ClothingStore.Services\ClothingStore.Services.csproj", "{ECDFE160-3DE0-4F56-9042-527E267183F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
