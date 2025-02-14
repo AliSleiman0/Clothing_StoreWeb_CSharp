@@ -38,9 +38,9 @@ namespace Clothing_Store_C_.Controllers
             return Ok(await _OrderService.PlaceOrderAsync(setOrderDTO));
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateOrderStatusAsync([FromBody] string status, int orderId)
+        public async Task<IActionResult> UpdateOrderStatusAsync([FromBody] UpdateOrderStatusDto dto)
         {
-            return Ok(await _OrderService.UpdateOrderStatusAsync(status, orderId));
+            return Ok(await _OrderService.UpdateOrderStatusAsync(dto));
         }
         [HttpDelete]
         public async Task<IActionResult> CancelOrderAsync(int id)

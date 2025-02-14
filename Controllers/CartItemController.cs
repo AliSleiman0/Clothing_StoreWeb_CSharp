@@ -9,17 +9,17 @@ namespace Clothing_Store_C_.Controllers
     [ApiController]
     public class CartItemController : ControllerBase
     {
-        private CartItemService _cartItemService;
+        private ICartItemsService _cartItemService;
 
-        public CartItemController(CartItemService cartItemService)
+        public CartItemController(ICartItemsService cartItemService)
         {
             _cartItemService = cartItemService;
             
         }
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetCartItemsByCartIdAsync(int CartId)
+        public async Task<IActionResult> GetCartItemsByCartIdAsync(int id)
         {
-            return Ok(await _cartItemService.GetCartItemsByCartIdAsync(CartId));
+            return Ok(await _cartItemService.GetCartItemsByCartIdAsync(id));
         }
 
         [HttpPost]
@@ -29,10 +29,22 @@ namespace Clothing_Store_C_.Controllers
         }
        
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteCartItemAsync(int cartItemId)
+        public async Task<IActionResult> DeleteCartItemAsync(int id)
         {
-            return Ok(await _cartItemService.DeleteCartItemAsync(cartItemId));
+            return Ok(await _cartItemService.DeleteCartItemAsync(id));
         }
-
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCartItem(int id, [FromBody] SetCartItemDTO updateDto)
+        {
+            try
+            {
+                var result = await _cartItemService.UpdateCartItemAsync(id, updateDto);
+                return result ? NoContent() : NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }
